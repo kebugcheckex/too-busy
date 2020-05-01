@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"[F1] Cheap Plants (5 sun)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(sunchange, PlantsVsZombies.exe, 2B F3 89 B7 78 55 00 00)
+alloc(newmem,2048)
+label(returnhere)
+
+newmem:
+  sub esi, (int)5
+  mov [edi+00005578], esi
+  jmp returnhere
+
+sunchange:
+  jmp newmem
+  nop
+  nop
+  nop
+returnhere:
+
+registersymbol(sunchange)
+
+[DISABLE]
+sunchange:
+  db 2B F3 89 B7 78 55 00 00
+
+unregistersymbol(sunchange)
+dealloc(newmem)
+
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>112</Key>
+          </Keys>
+          <ID>0</ID>
+          <ActivateSound>Activate</ActivateSound>
+          <DeactivateSound>Deactivate</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"[F2] Instant Recharge"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(recharge, PlantsVsZombies.exe, FF 47 24 8B 47 24)
+alloc(newmem, 2048)
+label(returnhere)
+
+newmem:
+  add [edi+24], 200
+  mov eax, [edi+24]
+  jmp returnhere
+
+recharge:
+  jmp newmem
+  nop
+returnhere:
+
+registersymbol(recharge)
+
+[DISABLE]
+recharge:
+  db FF 47 24 8B 47 24
+
+unregistersymbol(recharge)
+dealloc(newmem)
+
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>113</Key>
+          </Keys>
+          <ID>0</ID>
+          <ActivateSound>Activate</ActivateSound>
+          <DeactivateSound>Deactivate</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"[F3] Get 50x coins"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(coinchange, PlantsVsZombies.exe, 8B 80 50 09 00 00 01 50 50)
+alloc(newmem,2048)
+label(returnhere)
+
+newmem:
+  mov eax, [eax+00000950]
+  add [eax+50], (int)100
+  jmp returnhere
+
+coinchange:
+  jmp newmem
+  nop
+  nop
+  nop
+  nop
+returnhere:
+
+registersymbol(coinchange)
+
+[DISABLE]
+coinchange:
+  db 8B 80 50 09 00 00 01 50 50
+
+unregistersymbol(coinchange)
+dealloc(newmem)
+
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>114</Key>
+          </Keys>
+          <ID>0</ID>
+          <ActivateSound>Activate</ActivateSound>
+          <DeactivateSound>Deactivate</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>7</ID>
+      <Description>"[F4] Infinite Plant Health"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(reduce_health, PlantsVsZombies.exe, 83 46 40 FC 8B 4E 40)
+
+reduce_health:
+  db 90 90 90 90
+
+registersymbol(reduce_health)
+
+[DISABLE]
+reduce_health:
+  db 83 46 40 FC
+
+unregistersymbol(reduce_health)
+
+
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>115</Key>
+          </Keys>
+          <ID>0</ID>
+          <ActivateSound>Activate</ActivateSound>
+          <DeactivateSound>Deactivate</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
