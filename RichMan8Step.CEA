@@ -1,0 +1,116 @@
+{ Game   : RichMan8.exe
+  Version: 
+  Date   : 2021-02-06
+  Author : syste
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(StepUpdater,RICHMAN8.EXE,89 48 3C 8B 55 F8 C7) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(noChange)
+label(endFor)
+label(common)
+label(return)
+label(forloop)
+
+label(stepValueP1)
+registersymbol(stepValueP1)
+label(stepValueP2)
+registersymbol(stepValueP2)
+label(stepValueP3)
+registersymbol(stepValueP3)
+label(stepValueP4)
+registersymbol(stepValueP4)
+
+newmem:
+/*
+ At this point, eax stores the player's struct base address,
+ need to figure out who is the current player and use their value
+ correspondingly
+*/
+code:
+  push ebx
+  push ecx
+  xor ecx, ecx
+  mov ebx, 1B2C03B0
+forloop:   // probably should use loopnz instruction, but I forgot how
+  cmp ecx, 4       // looped 4 times, didn't find, something's wrong, return
+  jle noChange
+  cmp eax, [ebx+ecx*4]
+  jne forloop
+
+endFor:
+  pop ecx
+  pop ebx
+  cmp eax,24660AE0
+  jne noChange
+  push ecx
+  mov ecx,[stepValue]
+  mov [eax+3C],ecx
+  pop ecx
+noChange:
+  mov [eax+3C],ecx
+common:
+  mov edx,[ebp-08]
+  jmp return
+
+  align 10 CC
+stepValueP1:
+  dd (int)1
+stepValueP2:
+  dd (int)1
+stepValueP3:
+  dd (int)1
+stepValueP4:
+  dd (int)1
+
+StepUpdater:
+  jmp newmem
+  nop
+return:
+registersymbol(StepUpdater)
+
+[DISABLE]
+
+StepUpdater:
+  db 89 48 3C 8B 55 F8
+
+unregistersymbol(StepUpdater)
+unregistersymbol(stepValueP1)
+unregistersymbol(stepValueP2)
+unregistersymbol(stepValueP3)
+unregistersymbol(stepValueP4)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: RICHMAN8.SFLB_MoneyAdd+6965
+
+RICHMAN8.SFLB_MoneyAdd+694E: CC                             - int 3 
+RICHMAN8.SFLB_MoneyAdd+694F: CC                             - int 3 
+RICHMAN8.SFLB_MoneyAdd+6950: 55                             - push ebp
+RICHMAN8.SFLB_MoneyAdd+6951: 8B EC                          - mov ebp,esp
+RICHMAN8.SFLB_MoneyAdd+6953: 83 EC 08                       - sub esp,08
+RICHMAN8.SFLB_MoneyAdd+6956: 89 4D F8                       - mov [ebp-08],ecx
+RICHMAN8.SFLB_MoneyAdd+6959: 83 7D 08 00                    - cmp dword ptr [ebp+08],00
+RICHMAN8.SFLB_MoneyAdd+695D: 7E 76                          - jle RICHMAN8.SFLB_MoneyAdd+69D5
+RICHMAN8.SFLB_MoneyAdd+695F: 8B 45 F8                       - mov eax,[ebp-08]
+RICHMAN8.SFLB_MoneyAdd+6962: 8B 4D 08                       - mov ecx,[ebp+08]
+// ---------- INJECTING HERE ----------
+RICHMAN8.SFLB_MoneyAdd+6965: 89 48 3C                       - mov [eax+3C],ecx
+// ---------- DONE INJECTING  ----------
+RICHMAN8.SFLB_MoneyAdd+6968: 8B 55 F8                       - mov edx,[ebp-08]
+RICHMAN8.SFLB_MoneyAdd+696B: C7 82 B8 01 00 00 01 00 00 00  - mov [edx+000001B8],00000001
+RICHMAN8.SFLB_MoneyAdd+6975: 6A 00                          - push 00
+RICHMAN8.SFLB_MoneyAdd+6977: 6A 00                          - push 00
+RICHMAN8.SFLB_MoneyAdd+6979: 6A 00                          - push 00
+RICHMAN8.SFLB_MoneyAdd+697B: 8B 45 F8                       - mov eax,[ebp-08]
+RICHMAN8.SFLB_MoneyAdd+697E: 8B 10                          - mov edx,[eax]
+RICHMAN8.SFLB_MoneyAdd+6980: 8B 4D F8                       - mov ecx,[ebp-08]
+RICHMAN8.SFLB_MoneyAdd+6983: FF 52 14                       - call dword ptr [edx+14]
+RICHMAN8.SFLB_MoneyAdd+6986: 8B 45 F8                       - mov eax,[ebp-08]
+}

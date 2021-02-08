@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"玩家1的数据结构地址"</Description>
+      <LastState Value="24C22218" RealAddress="1B2B03B0"/>
+      <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>1B2B03B0</Address>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"现金"</Description>
+          <LastState Value="344808" RealAddress="24C224A8"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>1B2B03B0</Address>
+          <Offsets>
+            <Offset>290</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"银行存款"</Description>
+          <LastState Value="145200" RealAddress="24C224AC"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>1B2B03B0</Address>
+          <Offsets>
+            <Offset>294</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>3</ID>
+          <Description>"点券"</Description>
+          <LastState Value="70" RealAddress="24C2253C"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>1B2B03B0</Address>
+          <Offsets>
+            <Offset>324</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"剩余步数"</Description>
+          <LastState Value="0" RealAddress="24C22254"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>1B2B03B0</Address>
+          <Offsets>
+            <Offset>3c</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>9</ID>
+      <Description>"玩家2的数据结构地址"</Description>
+      <LastState Value="617436872" RealAddress="1B2B03B4"/>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>1B2B03B4</Address>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>10</ID>
+          <Description>"现金"</Description>
+          <LastState Value="0" RealAddress="24CD5958"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>1B2B03B4</Address>
+          <Offsets>
+            <Offset>290</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>27</ID>
+          <Description>"Step"</Description>
+          <LastState Value="0" RealAddress="24CD5704"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>1B2B03B4</Address>
+          <Offsets>
+            <Offset>3c</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"P3 Base"</Description>
+      <LastState Value="611918600" RealAddress="1B2B03B8"/>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>1B2B03B8</Address>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>12</ID>
+          <Description>"Money"</Description>
+          <LastState Value="1109039960" RealAddress="24792598"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>1B2B03B8</Address>
+          <Offsets>
+            <Offset>290</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>7</ID>
+      <Description>"P4 Base"</Description>
+      <LastState Value="247C5A90" RealAddress="1B2B03BC"/>
+      <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>1B2B03BC</Address>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>"Money"</Description>
+          <LastState Value="3435973836" RealAddress="247C5D20"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>1B2B03BC</Address>
+          <Offsets>
+            <Offset>290</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"下一回合步数修改"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RichMan8.exe
+  Version: 
+  Date   : 2021-02-06
+  Author : syste
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(StepUpdater,RICHMAN8.EXE,89 48 3C 8B 55 F8 C7) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(needChange)
+label(common)
+label(return)
+label(stepValue)
+registersymbol(stepValue)
+
+newmem:
+
+code:
+  cmp eax,1D62E9B0
+  je  needChange
+  mov [eax+3C],ecx
+  jmp common
+needChange:
+  push ecx
+  mov ecx,[stepValue]
+  mov [eax+3C],ecx
+  pop ecx
+common:
+  mov edx,[ebp-08]
+  jmp return
+
+  align 10 CC
+stepValue:
+  dd (int)1
+
+StepUpdater:
+  jmp newmem
+  nop
+return:
+registersymbol(StepUpdater)
+
+[DISABLE]
+
+StepUpdater:
+  db 89 48 3C 8B 55 F8
+
+unregistersymbol(StepUpdater)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: RICHMAN8.SFLB_MoneyAdd+6965
+
+RICHMAN8.SFLB_MoneyAdd+694E: CC                             - int 3 
+RICHMAN8.SFLB_MoneyAdd+694F: CC                             - int 3 
+RICHMAN8.SFLB_MoneyAdd+6950: 55                             - push ebp
+RICHMAN8.SFLB_MoneyAdd+6951: 8B EC                          - mov ebp,esp
+RICHMAN8.SFLB_MoneyAdd+6953: 83 EC 08                       - sub esp,08
+RICHMAN8.SFLB_MoneyAdd+6956: 89 4D F8                       - mov [ebp-08],ecx
+RICHMAN8.SFLB_MoneyAdd+6959: 83 7D 08 00                    - cmp dword ptr [ebp+08],00
+RICHMAN8.SFLB_MoneyAdd+695D: 7E 76                          - jle RICHMAN8.SFLB_MoneyAdd+69D5
+RICHMAN8.SFLB_MoneyAdd+695F: 8B 45 F8                       - mov eax,[ebp-08]
+RICHMAN8.SFLB_MoneyAdd+6962: 8B 4D 08                       - mov ecx,[ebp+08]
+// ---------- INJECTING HERE ----------
+RICHMAN8.SFLB_MoneyAdd+6965: 89 48 3C                       - mov [eax+3C],ecx
+// ---------- DONE INJECTING  ----------
+RICHMAN8.SFLB_MoneyAdd+6968: 8B 55 F8                       - mov edx,[ebp-08]
+RICHMAN8.SFLB_MoneyAdd+696B: C7 82 B8 01 00 00 01 00 00 00  - mov [edx+000001B8],00000001
+RICHMAN8.SFLB_MoneyAdd+6975: 6A 00                          - push 00
+RICHMAN8.SFLB_MoneyAdd+6977: 6A 00                          - push 00
+RICHMAN8.SFLB_MoneyAdd+6979: 6A 00                          - push 00
+RICHMAN8.SFLB_MoneyAdd+697B: 8B 45 F8                       - mov eax,[ebp-08]
+RICHMAN8.SFLB_MoneyAdd+697E: 8B 10                          - mov edx,[eax]
+RICHMAN8.SFLB_MoneyAdd+6980: 8B 4D F8                       - mov ecx,[ebp-08]
+RICHMAN8.SFLB_MoneyAdd+6983: FF 52 14                       - call dword ptr [edx+14]
+RICHMAN8.SFLB_MoneyAdd+6986: 8B 45 F8                       - mov eax,[ebp-08]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"步数"</Description>
+          <LastState Value="0" RealAddress="00690030"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>stepValue</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>18</ID>
+      <Description>"步数修改"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RichMan8.exe
+  Version:
+  Date   : 2021-02-06
+  Author : syste
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(StepUpdater,RICHMAN8.EXE,89 48 3C 8B 55 F8 C7) // should be unique
+alloc(newmem,$1000)
+
+label(getSteps)
+label(foundPlayerIndex)
+label(return)
+label(beforeReturn)
+label(stepValue1)
+label(stepValue2)
+label(stepValue3)
+label(stepValue4)
+registersymbol(playerBaseAddress)
+registersymbol(stepValue1)
+registersymbol(stepValue2)
+registersymbol(stepValue3)
+registersymbol(stepValue4)
+
+newmem:
+  push eax    // eax = player struct address
+  push ecx    // ecx = original step value
+  call getSteps  // returns the changed step values
+  cmp eax, 0
+  jle noChange // return value &lt;= 0 means no change
+  pop ecx     // discard original step value
+  mov ecx, eax   // set the modified step value
+  jmp resume
+noChange:
+  pop ecx   // restore original step value
+resume:
+  pop eax
+  mov [eax+3C],ecx
+  mov edx,[ebp-08] // this was replaced by not
+  jmp return
+
+label(loopBody)
+label(loopCondition)
+
+/*
+  Equivalent function
+  int checkPlayerID(int *base, int current) {
+    int i;
+    for (i = 0; i &lt; 4; i++) {
+      if (base[i*4] == current) {
+        return i;  // found
+      }
+    }
+    return -1; // not found
+  }
+*/
+
+getSteps:      // eax = player struct address, return value in ecx
+  push ebp
+  mov ebp, esp
+  sub esp, 8
+
+  mov DWORD PTR [ebp-04], 0     // [ebp-04] = player index
+  jmp loopCondition
+
+loopBody:
+  mov ecx, [ebp-04]       // get loop index
+  mov edx, [playerBaseAddress]   // get player base address
+  cmp eax, [edx+ecx*4]  // check if the player struct address equals to the current indexed address
+  je foundPlayerIndex       // now [ebp-04] is the index of the current player
+  inc [ebp-4]
+
+loopCondition:
+  cmp DWORD PTR [ebp-04], 3
+  jle loopBody
+
+foundPlayerIndex:  // [ebp-04] = player index
+  mov ecx, [ebp-04]
+  mov eax, [stepValue1+ecx*4] // return the step value for this player
+beforeReturn:
+  leave
+  ret
+
+  align 10 CC
+playerBaseAddress:
+  dd (int)0
+stepValue1:
+  dd (int)0
+stepValue2:
+  dd (int)0
+stepValue3:
+  dd (int)0
+stepValue4:
+  dd (int)0
+
+StepUpdater:
+  jmp newmem
+  nop
+return:
+registersymbol(StepUpdater)
+
+[DISABLE]
+
+StepUpdater:
+  db 89 48 3C 8B 55 F8
+
+unregistersymbol(StepUpdater)
+unregistersymbol(playerBaseAddress)
+unregistersymbol(stepValue1)
+unregistersymbol(stepValue2)
+unregistersymbol(stepValue3)
+unregistersymbol(stepValue4)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: RICHMAN8.SFLB_MoneyAdd+6965
+
+RICHMAN8.SFLB_MoneyAdd+694E: CC                             - int 3
+RICHMAN8.SFLB_MoneyAdd+694F: CC                             - int 3
+RICHMAN8.SFLB_MoneyAdd+6950: 55                             - push ebp
+RICHMAN8.SFLB_MoneyAdd+6951: 8B EC                          - mov ebp,esp
+RICHMAN8.SFLB_MoneyAdd+6953: 83 EC 08                       - sub esp,08
+RICHMAN8.SFLB_MoneyAdd+6956: 89 4D F8                       - mov [ebp-08],ecx
+RICHMAN8.SFLB_MoneyAdd+6959: 83 7D 08 00                    - cmp dword ptr [ebp+08],00
+RICHMAN8.SFLB_MoneyAdd+695D: 7E 76                          - jle RICHMAN8.SFLB_MoneyAdd+69D5
+RICHMAN8.SFLB_MoneyAdd+695F: 8B 45 F8                       - mov eax,[ebp-08]
+RICHMAN8.SFLB_MoneyAdd+6962: 8B 4D 08                       - mov ecx,[ebp+08]
+// ---------- INJECTING HERE ----------
+RICHMAN8.SFLB_MoneyAdd+6965: 89 48 3C                       - mov [eax+3C],ecx
+// ---------- DONE INJECTING  ----------
+RICHMAN8.SFLB_MoneyAdd+6968: 8B 55 F8                       - mov edx,[ebp-08]
+RICHMAN8.SFLB_MoneyAdd+696B: C7 82 B8 01 00 00 01 00 00 00  - mov [edx+000001B8],00000001
+RICHMAN8.SFLB_MoneyAdd+6975: 6A 00                          - push 00
+RICHMAN8.SFLB_MoneyAdd+6977: 6A 00                          - push 00
+RICHMAN8.SFLB_MoneyAdd+6979: 6A 00                          - push 00
+RICHMAN8.SFLB_MoneyAdd+697B: 8B 45 F8                       - mov eax,[ebp-08]
+RICHMAN8.SFLB_MoneyAdd+697E: 8B 10                          - mov edx,[eax]
+RICHMAN8.SFLB_MoneyAdd+6980: 8B 4D F8                       - mov ecx,[ebp-08]
+RICHMAN8.SFLB_MoneyAdd+6983: FF 52 14                       - call dword ptr [edx+14]
+RICHMAN8.SFLB_MoneyAdd+6986: 8B 45 F8                       - mov eax,[ebp-08]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>26</ID>
+          <Description>"玩家数据结构基础地址"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>playerBaseAddress</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"玩家1下一回合步数(0表示不修改)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>stepValue1</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>20</ID>
+          <Description>"玩家2下一回合步数(0表示不修改)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>stepValue2</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>21</ID>
+          <Description>"玩家3下一回合步数(0表示不修改)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>stepValue3</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>22</ID>
+          <Description>"玩家4下一回合步数(0表示不修改)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>stepValue4</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry Color="20000000">
+      <Description>Code :write steps</Description>
+      <AddressString>RICHMAN8.EXE+84FA5</AddressString>
+      <Before>
+        <Byte>45</Byte>
+        <Byte>F8</Byte>
+        <Byte>8B</Byte>
+        <Byte>4D</Byte>
+        <Byte>08</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>48</Byte>
+        <Byte>3C</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>55</Byte>
+        <Byte>F8</Byte>
+        <Byte>C7</Byte>
+        <Byte>82</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>Code :update steps</Description>
+      <AddressString>RICHMAN8.EXE+7B867</AddressString>
+      <Before>
+        <Byte>EA</Byte>
+        <Byte>01</Byte>
+        <Byte>8B</Byte>
+        <Byte>45</Byte>
+        <Byte>E8</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>50</Byte>
+        <Byte>3C</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>4D</Byte>
+        <Byte>E8</Byte>
+        <Byte>83</Byte>
+        <Byte>79</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>memPointerTest</Name>
+      <Address>42D70000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <DisassemblerComments>
+    <DisassemblerComment>
+      <Address>"RICHMAN8.EXE"+7D090</Address>
+      <Comment>This function might be the one that generates steps
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"RICHMAN8.EXE"+81C22</Address>
+      <Comment>Function call to generate steps
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"RICHMAN8.EXE"+84F9F</Address>
+      <Comment>ebp-08 is the base of player struct
+</Comment>
+    </DisassemblerComment>
+  </DisassemblerComments>
+</CheatTable>

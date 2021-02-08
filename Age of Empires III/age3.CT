@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Age of Empires 3  Script AOB"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+===========================================
+ Age of Empires III
+ Game Version  : 1.00 - 1.13
+ Script Version: 1.0
+ CE Version    : 5.6
+ GodMode, Resources
+ 24-Jul-2008 V1.0
+ 06-Oct-2010 AOB Version
+===========================================
+}
+
+[ENABLE]
+//=========================================
+alloc(MyCode,1024)
+//=========================================
+
+aobscan(aobGodMode,8b 97 a8 00 00 00 89 4f 64)  // ok
+aobscan(aobMonResource,33 04 8a 89 44 24 14 d9 44 24 14) // ok
+aobscan(aobMonPlayer,8b 11 8b 4c 24 20 52 8b 90 c0 00 00 00) //ok
+
+//=========================================
+// Declaration section
+label(pGodMode)
+label(pMonResource)
+label(pMonPlayer)
+label(_GodMode)
+label(_GodM1)
+label(_BackGM)
+label(_ExitGM)
+label(_MonResource)
+label(_MonR1)
+label(_BackMR)
+label(_ExitMR)
+label(_MonPlayer)
+label(_BackMP)
+label(_ExitMP)
+label(iPlayerID)
+label(pResource)
+label(pPlayer)
+label(pLastOne)
+label(iEnableGM)
+label(iEnableMR)
+
+registersymbol(MyCode)
+registersymbol(pLastOne)
+registersymbol(pResource)
+registersymbol(pPlayer)
+registersymbol(iPlayerID)
+registersymbol(iEnableGM)
+registersymbol(iEnableMR)
+registersymbol(pGodMode)
+registersymbol(pMonResource)
+registersymbol(pMonPlayer)
+
+//=========================================
+MyCode:
+//=========================================
+_GodMode:
+ mov [pLastOne],edi             // Save structure address for debugging
+
+ cmp dword ptr [iEnableGM],0
+ je _ExitGM                     // Jump if feature is disabled
+
+ mov edx,[edi+44]               // Read ptr to Player ID 
+ or edx,edx                     // Valid Ptr?
+ jz _ExitGM                     // Jump if false
+
+ mov edx,[edx]                  // Read Player ID
+ cmp edx,[iPlayerID]            // Player�s? 
+ jne _ExitGM                    // Jump if false
+
+ mov eax,[edi+64]               // Read current HP
+ cmp eax,[esp+14]               // Current HP &lt;= New HP?
+ jle _GodM1                     // Jump if true
+
+ mov [esp+14],eax               // Update stack with current HP
+
+_GodM1:
+ mov ecx,[esp+14]               // Read new HP
+
+_ExitGM:
+ mov edx,[edi+000000a8]         // Original code
+ jmp _BackGM                    // Back to main code
+
+//=========================================
+// Minimum Resource = 15000
+_MonResource:
+ push ebx                       // Save EBX
+
+ cmp dword ptr [iEnableMR],0
+ je _ExitMR                     // Jump if feature is disabled
+
+ cmp edx,[pResource]            // Is it the player�s?
+ jne _MonR1                     // Jump if false
+
+ cmp ecx,3                      // Is it coin, wood or food? 
+ jge _MonR1                     // Jump if false
+
+ mov ebx,eax                    // Save encription
+ xor eax,[edx+ecx*4]            // Decript resource
+
+ cmp eax,466a6000               // Greater than 15000?
+ jge _ExitMR                    // Jump if true
+
+ mov eax,466a6000               // Make eax = 15000
+ xor eax,ebx                    // Encript resource
+ mov [edx+ecx*4],eax            // Update resource
+
+ mov eax,ebx                    // Restore encription
+
+_MonR1:
+ xor eax,[edx+ecx*4]            // Decript resource
+
+_ExitMR:
+ pop ebx                        // Restore EBX
+ mov [esp+14],eax               // Original code
+ jmp _BackMR                    // Back to main code
+
+//=========================================
+// Monitor player structure address
+_MonPlayer:
+ mov edx,[ecx]                  // Read ID
+ cmp edx,[iPlayerID]            // Is it the player�s?
+ jne _ExitMP                    // Jump if false
+
+ mov edx,[ecx+00000210]         // Read ptr to resource
+
+ mov [pResource],edx            // Save ptr to further use
+ mov [pPlayer],ecx              // Save player struct address for debugging
+
+ mov edx,[ecx]                  // Read ID
+
+_ExitMP:
+ mov ecx,[esp+20]               // Original code
+ jmp _BackMP                    // Back to main code
+
+//=========================================
+// Variables
+pLastOne:
+ dd 0
+pResource:
+ dd 0
+pPlayer:
+ dd 0
+iEnableGM:
+ dd 1
+iEnableMR:
+ dd 1
+iPlayerID:
+ dd 1
+
+//=========================================
+// Hacking Points
+//age3.exe+33C2E:
+aobGodMode:
+pGodMode:
+ jmp _GodMode
+ nop
+_BackGM:
+
+//age3.exe+5E51:
+aobMonResource:
+pMonResource:
+ jmp _MonResource
+ nop
+ nop
+_BackMR:
+
+//age3.exe+39e5c:
+aobMonPlayer:
+pMonPlayer:
+ jmp _MonPlayer
+ nop
+_BackMP:
+
+//=========================================
+// Original Codes
+[DISABLE]
+//age3.exe+33C2E:
+pGodMode:
+ mov edx,[edi+000000a8]
+  
+//age3.exe+5E51:
+pMonResource:
+ xor eax,[edx+ecx*4]
+ mov [esp+14],eax
+ 
+//age3.exe+39e5c:
+pMonPlayer:
+ mov edx,[ecx]
+ mov ecx,[esp+20]
+ 
+unregistersymbol(MyCode)
+unregistersymbol(pLastOne)
+unregistersymbol(iPlayerID)
+unregistersymbol(pResource)
+unregistersymbol(pPlayer)
+unregistersymbol(iEnableGM)
+unregistersymbol(iEnableMR)
+unregistersymbol(pGodMode)
+unregistersymbol(pMonResource)
+unregistersymbol(pMonPlayer)
+
+dealloc(MyCode)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Enable/Disable God Mode"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>iEnableGM</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Enable/Disable Unlimited Resources"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>iEnableMR</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"God Mode"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(CheatCode, 1024)
+aobscan(EntryPoint, 8b 97 a8 00 00 00 89 4f 64)
+label(_updateHP)
+label(_exit)
+label(ReturnAddress)
+
+CheatCode:
+  mov edx,[edi+44]               // Read ptr to Player ID
+  or edx,edx                    // Valid Ptr?
+  jz _exit                       // Jump if false
+
+  mov edx,[edx]                  // Read Player ID
+  cmp edx, 1                     // Player's?
+  jne _exit                      // Jump if false
+
+  mov eax,[edi+64]               // Read current HP
+  cmp eax,[esp+14]               // Current HP &lt;= New HP?
+  jle _updateHP                  // Jump if true
+
+  mov [esp+14],eax               // Update stack with current HP
+
+_updateHP:
+  mov ecx,[esp+14]               // Read new HP
+
+_exit:
+  mov edx,[edi+000000a8]          // Original code
+  jmp ReturnAddress               // Back to main code
+
+EntryPoint:
+  jmp CheatCode
+  nop
+ReturnAddress:
+
+[DISABLE]
+EntryPoint:
+  mov edx,[edi+000000a8]
+
+dealloc(CheatCode)
+
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>112</Key>
+          </Keys>
+          <ID>0</ID>
+          <ActivateSound>Activate</ActivateSound>
+          <DeactivateSound>Deactivate</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"Unlimited Customize Points"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(CheatCode, 1024)
+aobscan(EntryPoint, 83 86 A4 00 00 00 FF)
+registersymbol(EntryPoint)
+
+CheatCode:
+ nop
+ nop
+ nop
+ nop
+ nop
+ nop
+ nop
+
+[DISABLE]
+EntryPoint:
+  add dword ptr [esi+000000A4],-01
+
+unregistersymbol(EntryPoint)
+dealloc(CheatCode)
+
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"[F2] Unlimited Resource"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+===========================================
+ Age of Empires III
+ Game Version  : 1.00 - 1.13
+ Script Version: 1.0
+ CE Version    : 5.6
+ GodMode, Resources
+ 24-Jul-2008 V1.0
+ 06-Oct-2010 AOB Version
+===========================================
+}
+
+[ENABLE]
+//=========================================
+alloc(MyCode,1024)
+//=========================================
+
+aobscan(aobGodMode,8b 97 a8 00 00 00 89 4f 64)  // ok
+aobscan(aobMonResource,33 04 8a 89 44 24 14 d9 44 24 14) // ok
+aobscan(aobMonPlayer,8b 11 8b 4c 24 20 52 8b 90 c0 00 00 00) //ok
+
+//=========================================
+// Declaration section
+label(pMonResource)
+label(pMonPlayer)
+label(_MonResource)
+label(_MonR1)
+label(_BackMR)
+label(_ExitMR)
+label(_MonPlayer)
+label(_BackMP)
+label(_ExitMP)
+label(iPlayerID)
+label(pResource)
+label(pPlayer)
+label(pLastOne)
+
+registersymbol(MyCode)
+registersymbol(pLastOne)
+registersymbol(pResource)
+registersymbol(pPlayer)
+registersymbol(iPlayerID)
+registersymbol(pMonResource)
+registersymbol(pMonPlayer)
+
+//=========================================
+MyCode:
+//=========================================
+// Minimum Resource = 15000
+_MonResource:
+ push ebx                       // Save EBX
+
+ cmp edx,[pResource]            // Is it the player's?
+ jne _MonR1                     // Jump if false
+
+ cmp ecx,3                      // Is it coin, wood or food?
+ jge _MonR1                     // Jump if false
+
+ mov ebx,eax                    // Save encription
+ xor eax,[edx+ecx*4]            // Decript resource
+
+ cmp eax,466a6000               // Greater than 15000?
+ jge _ExitMR                    // Jump if true
+
+ mov eax,466a6000               // Make eax = 15000
+ xor eax,ebx                    // Encript resource
+ mov [edx+ecx*4],eax            // Update resource
+
+ mov eax,ebx                    // Restore encription
+
+_MonR1:
+ xor eax,[edx+ecx*4]            // Decript resource
+
+_ExitMR:
+ pop ebx                        // Restore EBX
+ mov [esp+14],eax               // Original code
+ jmp _BackMR                    // Back to main code
+
+//=========================================
+// Monitor player structure address
+_MonPlayer:
+ mov edx,[ecx]                  // Read ID
+ cmp edx,[iPlayerID]            // Is it the player's?
+ jne _ExitMP                    // Jump if false
+
+ mov edx,[ecx+00000210]         // Read ptr to resource
+
+ mov [pResource],edx            // Save ptr to further use
+ mov [pPlayer],ecx              // Save player struct address for debugging
+
+ mov edx,[ecx]                  // Read ID
+
+_ExitMP:
+ mov ecx,[esp+20]               // Original code
+ jmp _BackMP                    // Back to main code
+
+//=========================================
+// Variables
+pLastOne:
+ dd 0
+pResource:
+ dd 0
+pPlayer:
+ dd 0
+iPlayerID:
+ dd 1
+
+//=========================================
+// Hacking Points
+//age3.exe+5E51:
+aobMonResource:
+pMonResource:
+ jmp _MonResource
+ nop
+ nop
+_BackMR:
+
+//age3.exe+39e5c:
+aobMonPlayer:
+pMonPlayer:
+ jmp _MonPlayer
+ nop
+_BackMP:
+
+//=========================================
+// Original Codes
+[DISABLE]
+
+//age3.exe+5E51:
+pMonResource:
+ xor eax,[edx+ecx*4]
+ mov [esp+14],eax
+
+//age3.exe+39e5c:
+pMonPlayer:
+ mov edx,[ecx]
+ mov ecx,[esp+20]
+
+unregistersymbol(MyCode)
+unregistersymbol(pLastOne)
+unregistersymbol(iPlayerID)
+unregistersymbol(pResource)
+unregistersymbol(pPlayer)
+unregistersymbol(pMonResource)
+unregistersymbol(pMonPlayer)
+
+dealloc(MyCode)
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>113</Key>
+          </Keys>
+          <ID>0</ID>
+          <ActivateSound>Activate</ActivateSound>
+          <DeactivateSound>Deactivate</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>Recifense</Name>
+      <Address>20201021</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>

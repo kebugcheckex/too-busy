@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"[Pyramid] Increase card count"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(card_change, Solitaire.exe, 74 06 FF 83 B0 03 00 00)
+
+card_change:
+  nop
+  nop
+
+registersymbol(card_change)
+
+[DISABLE]
+card_change:
+  db 74 06
+unregistersymbol(card_change)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"[Pyramid] Score + 255"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(score_change, Solitaire.exe, 48 8B 5C 24 30 89 47 6C)
+alloc(newmem, 2048, score_change)
+label(returnhere)
+
+newmem:
+  mov rbx,[rsp+30]
+  add eax,FF
+  mov [rdi+6C],eax
+  jmp returnhere
+
+score_change:
+  jmp newmem
+returnhere:
+
+registersymbol(score_change)
+
+[DISABLE]
+score_change:
+  db 48 8B 5C 24 30 89 47 6C
+
+unregistersymbol(score_change)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>14</ID>
+      <Description>"[TriPeaks] Increase card count"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(card_change, Solitaire.exe, 74 06 FF 83 D8 03 00 00)
+
+card_change:
+  nop
+  nop
+
+registersymbol(card_change)
+
+[DISABLE]
+card_change:
+  db 74 06
+unregistersymbol(card_change)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>15</ID>
+      <Description>"[TriPeaks] Score + 4095"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(score_change, Solitaire.exe, 48 8B 5C 24 30 89 47 6C)
+alloc(newmem, 2048, score_change)
+label(returnhere)
+
+newmem:
+  mov rbx,[rsp+30]
+  add eax,FFF
+  mov [rdi+6C],eax
+  jmp returnhere
+
+score_change:
+  jmp newmem
+returnhere:
+
+registersymbol(score_change)
+
+[DISABLE]
+score_change:
+  db 48 8B 5C 24 30 89 47 6C
+
+unregistersymbol(score_change)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>19</ID>
+      <Description>"[Spider][Klondike] Score + 15"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(score_change, Solitaire.exe, 48 8B 5C 24 30 89 47 6C)
+alloc(newmem, 2048, score_change)
+label(returnhere)
+
+newmem:
+  mov rbx,[rsp+30]
+  add eax,0x0F
+  mov [rdi+6C],eax
+  jmp returnhere
+
+score_change:
+  jmp newmem
+returnhere:
+
+registersymbol(score_change)
+
+[DISABLE]
+score_change:
+  db 48 8B 5C 24 30 89 47 6C
+
+unregistersymbol(score_change)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"[Klondike][TriPeaks] Freeze Timer"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(timer_change, Solitaire.exe, F3 0F 58 83 18 02 00 00)
+
+timer_change:
+  db 90 90 90 90 90 90 90 90
+  db 90 90 90 90 90 90 90 90
+
+registersymbol(timer_change)
+
+[DISABLE]
+timer_change:
+  db F3 0F 58 83 18 02 00 00
+  db F3 0F 11 83 18 02 00 00
+unregistersymbol(timer_change)
+
+/*
+ Original code
+ movaps xmm0,xmm6
+ addss xmm0,[rbx+00000218]
+ movss [rbx+00000218],xmm0
+*/
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>29</ID>
+      <Description>"[Klondike] Some counter?"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(value_change, Solitaire.exe, 48 FF 43 20 48 8B 5C 24 30 48 8B 74 24 38)
+
+value_change:
+  db 90 90 90 90
+
+registersymbol(value_change)
+
+[DISABLE]
+value_change:
+  db 48 FF 43 20
+unregistersymbol(value_change)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>32</ID>
+      <Description>"[Klondike] Freeze Move Count"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(step_increase, Solitaire.exe, FF 83 1C 03 00 00 48 8B 5C 24 30)
+
+step_increase:
+  db 90 90 90 90 90 90
+
+registersymbol(step_increase)
+
+[DISABLE]
+step_increase:
+  db FF 83 1C 03 00 00
+unregistersymbol(step_increase)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>35</ID>
+      <Description>"[Klondike] Card count mode cheat"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(card_base, Solitaire.exe, 41 8A 80 20 03 00 00)
+
+card_base:
+  xor al,al
+  nop
+  nop
+  nop
+  nop
+  nop
+
+registersymbol(card_base)
+
+[DISABLE]
+card_base:
+  db 41 8A 80 20 03 00 00
+
+unregistersymbol(card_base)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>38</ID>
+      <Description>"[TriPeaks] Add 15 boards"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(board_change, Solitaire.exe, 41 89 89 90 03 00 00 45 88 81)
+alloc(newmem, 2048, board_change)
+label(returnhere)
+
+newmem:
+  add ecx,F
+  mov [r9+00000390],ecx
+  jmp returnhere
+
+board_change:
+  jmp newmem
+  nop
+  nop
+returnhere:
+
+registersymbol(board_change)
+
+[DISABLE]
+board_change:
+  db 41 89 89 90 03 00 00
+
+unregistersymbol(board_change)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>40</ID>
+      <Description>"[TriPeaks] Freeze number of boards"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048,"Solitaire.exe"+3E3EFF)
+label(returnhere)
+
+newmem:
+mov [rbx+000002FC],1
+jmp returnhere
+
+"Solitaire.exe"+3E3EFF:
+  jmp newmem
+  nop
+returnhere:
+
+[DISABLE]
+"Solitaire.exe"+3E3EFF:
+  db 89 83 FC 02 00 00
+dealloc(newmem)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>41</ID>
+      <Description>"No description"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>20AAC2CE31C</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>42</ID>
+      <Description>"Set Score limit to 1"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Solitaire.exe
+  Version: 
+  Date   : 2020-12-02
+  Author : syste
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(INJECT,Solitaire.exe,A8 03 00 00 39 41 6C 0F 9D C0) // should be unique
+alloc(newmem,$1000,INJECT)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov eax,1
+  cmp [rcx+6C],eax
+  setge al
+  jmp return
+
+INJECT+04:
+  jmp newmem
+  nop
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT+04:
+  db 39 41 6C 0F 9D C0
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Solitaire.exe+1E37CA
+
+Solitaire.exe+1E37A6: 48 8B D9              - mov rbx,rcx
+Solitaire.exe+1E37A9: 48 81 C1 80 03 00 00  - add rcx,00000380
+Solitaire.exe+1E37B0: E8 9B F9 FF FF        - call Solitaire.exe+1E3150
+Solitaire.exe+1E37B5: 48 8B CB              - mov rcx,rbx
+Solitaire.exe+1E37B8: 48 83 C4 20           - add rsp,20
+Solitaire.exe+1E37BC: 5B                    - pop rbx
+Solitaire.exe+1E37BD: E9 6A 8A 0C 00        - jmp Solitaire.exe+2AC22C
+Solitaire.exe+1E37C2: CC                    - int 3 
+Solitaire.exe+1E37C3: CC                    - int 3 
+Solitaire.exe+1E37C4: 8B 81 A8 03 00 00     - mov eax,[rcx+000003A8]
+// ---------- INJECTING HERE ----------
+Solitaire.exe+1E37CA: 39 41 6C              - cmp [rcx+6C],eax
+// ---------- DONE INJECTING  ----------
+Solitaire.exe+1E37CD: 0F 9D C0              - setge al
+Solitaire.exe+1E37D0: C3                    - ret 
+Solitaire.exe+1E37D1: CC                    - int 3 
+Solitaire.exe+1E37D2: CC                    - int 3 
+Solitaire.exe+1E37D3: CC                    - int 3 
+Solitaire.exe+1E37D4: 40 53                 - push rbx
+Solitaire.exe+1E37D6: 48 83 EC 20           - sub rsp,20
+Solitaire.exe+1E37DA: 8B 81 A8 03 00 00     - mov eax,[rcx+000003A8]
+Solitaire.exe+1E37E0: 48 8B D9              - mov rbx,rcx
+Solitaire.exe+1E37E3: 39 41 6C              - cmp [rcx+6C],eax
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <Comments>Info about this table:
+</Comments>
+  <DisassemblerComments>
+    <DisassemblerComment>
+      <Address>"Solitaire.exe"+2897A1</Address>
+      <Comment>Compare with target card?
+</Comment>
+    </DisassemblerComment>
+  </DisassemblerComments>
+</CheatTable>
