@@ -4,7 +4,7 @@
     <CheatEntry>
       <ID>27</ID>
       <Description>"[F1] Infinite Health"</Description>
-      <LastState Activated="1"/>
+      <LastState/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>[ENABLE]
 alloc(newmem,2048)
@@ -55,7 +55,7 @@ dealloc(newmem)
     <CheatEntry>
       <ID>15</ID>
       <Description>"[F2] No Reload"</Description>
-      <LastState Activated="1"/>
+      <LastState/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>[ENABLE]
 "iw3sp.exe"+1BFCB7:
@@ -131,103 +131,5 @@ dealloc(newmem)
       </Hotkeys>
     </CheatEntry>
   </CheatEntries>
-  <CheatCodes>
-    <CodeEntry Color="80000008">
-      <Description>Change of sub edx,ecx</Description>
-      <AddressString>iw3sp.exe+1BFB32</AddressString>
-      <Before>
-        <Byte>43</Byte>
-        <Byte>8B</Byte>
-        <Byte>7C</Byte>
-        <Byte>24</Byte>
-        <Byte>10</Byte>
-      </Before>
-      <Actual>
-        <Byte>2B</Byte>
-        <Byte>D1</Byte>
-      </Actual>
-      <After>
-        <Byte>89</Byte>
-        <Byte>94</Byte>
-        <Byte>B8</Byte>
-        <Byte>34</Byte>
-        <Byte>01</Byte>
-      </After>
-    </CodeEntry>
-    <CodeEntry Color="80000008">
-      <Description>Change of sub eax,edx</Description>
-      <AddressString>iw3sp.exe+1BFCB7</AddressString>
-      <Before>
-        <Byte>D6</Byte>
-        <Byte>7D</Byte>
-        <Byte>02</Byte>
-        <Byte>8B</Byte>
-        <Byte>D0</Byte>
-      </Before>
-      <Actual>
-        <Byte>2B</Byte>
-        <Byte>C2</Byte>
-      </Actual>
-      <After>
-        <Byte>89</Byte>
-        <Byte>84</Byte>
-        <Byte>8F</Byte>
-        <Byte>34</Byte>
-        <Byte>03</Byte>
-      </After>
-    </CodeEntry>
-    <CodeEntry Color="80000008">
-      <Description>Change of jnl iw3sp.exe+AEA75</Description>
-      <AddressString>iw3sp.exe+AEA69</AddressString>
-      <Before>
-        <Byte>44</Byte>
-        <Byte>01</Byte>
-        <Byte>00</Byte>
-        <Byte>00</Byte>
-        <Byte>00</Byte>
-      </Before>
-      <Actual>
-        <Byte>7D</Byte>
-        <Byte>0A</Byte>
-      </Actual>
-      <After>
-        <Byte>C7</Byte>
-        <Byte>85</Byte>
-        <Byte>44</Byte>
-        <Byte>01</Byte>
-        <Byte>00</Byte>
-      </After>
-    </CodeEntry>
-    <CodeEntry Color="80000008">
-      <Description>Change of mov [ebp+00000144],00000000</Description>
-      <AddressString>iw3sp.exe+AEA6B</AddressString>
-      <Before>
-        <Byte>00</Byte>
-        <Byte>00</Byte>
-        <Byte>00</Byte>
-        <Byte>7D</Byte>
-        <Byte>0A</Byte>
-      </Before>
-      <Actual>
-        <Byte>C7</Byte>
-        <Byte>85</Byte>
-        <Byte>44</Byte>
-        <Byte>01</Byte>
-        <Byte>00</Byte>
-        <Byte>00</Byte>
-        <Byte>00</Byte>
-        <Byte>00</Byte>
-        <Byte>00</Byte>
-        <Byte>00</Byte>
-      </Actual>
-      <After>
-        <Byte>8B</Byte>
-        <Byte>8D</Byte>
-        <Byte>44</Byte>
-        <Byte>01</Byte>
-        <Byte>00</Byte>
-      </After>
-    </CodeEntry>
-  </CheatCodes>
   <UserdefinedSymbols/>
 </CheatTable>
